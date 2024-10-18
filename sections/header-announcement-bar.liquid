@@ -1,0 +1,129 @@
+{% comment %}Added by KoderWeb{% endcomment %}
+{%- if section.settings.homeOnly == false or template.name == 'index' -%}
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <script src="//cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  {{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
+
+
+<announcement-bar style="--bg:{{ section.settings.bg }};--color:{{ section.settings.color }}" >
+    {% if section.blocks.size > 0 %}
+    <div class="announcement-bar-slider-wrapper">
+      <div id="{{ section.id }}" class="announcement-bar-slider swiper" data-autoplay-time="{{ section.settings.rotation | times: 10000 }}"> 
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+           {% case block.type %}
+            {%- when 'text' -%}
+               {% if block.settings.text != blank %}
+               
+               <div class="announcement-text swiper-slide" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+               </div>
+
+               {% endif %}
+               
+            {%- endcase -%}
+          {%- endfor -%}
+
+           
+
+         </div>
+
+         
+
+       </div>
+       <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+
+    </div>
+    {% endif %}
+</announcement-bar>
+<script>
+  document.documentElement.style.setProperty('--announcement-bar', `${Math.round(document.getElementById('shopify-section-{{ section.id }}').offsetHeight)}px`);
+</script>
+<script>
+var announcementBarID = document.getElementById('shopify-section-{{ section.id }}');
+document.addEventListener("DOMContentLoaded", function() {
+    var announcementBar = document.querySelector('.announcement-bar-new');
+    var isSticky = {{ section.settings.sticky | json }};
+    
+    if (isSticky) {
+        announcementBar.classList.add('sticky');
+    } else {
+        announcementBar.classList.remove('sticky');
+    }
+
+    // Optionally handle the resize event to update the sticky positioning if necessary
+    window.addEventListener('resize', function() {
+        if (isSticky) {
+            announcementBar.classList.add('sticky');
+        }
+    });
+});
+</script>
+
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "Announcement bar new",
+    "class": "announcement-bar-new",
+    "limit": 1,
+    "enabled_on": { "groups": ["header"] },
+    "presets": [ { "name": "Announcement bar  new" } ],
+    "settings": [
+        {
+          "type": "checkbox",
+          "id": "homeOnly",
+          "label": "Show only on home page",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "sticky",
+          "label": "Sticky on?",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "rotation",
+          "min": 2,
+          "max": 10,
+          "step": 1,
+          "unit": "Sec",
+          "label": "Rotation time",
+          "default": 5
+        },
+        {
+          "type": "header",
+          "content": "Style"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Background color",
+          "default": "#41351B"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Text color",
+          "default": "#BBC66B"
+        }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Announce something here</p>"
+          }
+        ]
+      }
+    ]
+}
+{% endschema %}

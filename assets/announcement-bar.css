@@ -1,0 +1,60 @@
+announcement-bar{
+	background: var(--bg);
+	color: var(--color);
+	display: block;
+	text-align: center;
+}
+announcement-bar a{
+	color: var(--color) !important;
+	text-underline-offset: 2px;
+}
+
+
+.announcement-bar-new.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+ 
+.announcement-bar-new.sticky + .main-header {
+  top: var(--announcement-bar) !important;
+}
+
+.announcement-bar-slider-wrapper{
+	max-width: 1000px;
+	margin: 0 auto;
+	padding-left: 30px;
+	padding-right: 30px;
+	overflow: hidden;
+	position: relative;
+
+}
+announcement-bar .swiper-wrapper{
+
+}
+.announcement-text{
+	
+}
+.announcement-text p:last-child{
+	margin-bottom: 0;
+}
+announcement-bar .swiper-button-next, announcement-bar .swiper-button-prev{
+	color: var(--color);
+}
+announcement-bar .swiper-button-next:after, announcement-bar .swiper-button-prev:after {
+    font-size: var(--fontSize);
+}
+
+announcement-bar .swiper-button-prev{
+	left: 0px;
+}
+announcement-bar .swiper-button-next{
+	right: 0px;
+}
+.announcement-bar-slider .swiper-wrapper{
+	    align-items: center;
+}
+
+
+
+ 
